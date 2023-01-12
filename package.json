@@ -1,0 +1,17 @@
+{
+  "name": "ktc-hourly-rating-scraper",
+  "version": "1.0.0",
+  "description": "Scrape keeptradecut.com and store player ratings",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scrape": "node index"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "i": "^0.3.7",
+    "npm": "^9.2.0",
+    "puppeteer": "^19.5.1"
+  }
+}
