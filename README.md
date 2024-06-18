@@ -1,0 +1,1 @@
+This project uses Puppeteer to scrape the contents of https://keeptradecut.com/dynasty-rankings and https://www.fantasycalc.com/dynasty-rankings, with the idea of using them in the future to find arbitrage opportunities.
