@@ -37,6 +37,7 @@ async function scrapeKTCRankings() {
     }
   }
 
+  // close browser instance
   browser.close();
   console.log('KTC Top 500: ', playersAsObjects);
 }
@@ -50,12 +51,14 @@ async function scrapeFantasyCalcRankings() {
   // navigate to url
   await page.goto('https://www.fantasycalc.com/dynasty-rankings');
 
+  const playersAsObjects = [];
+
+  for (let pageNum = 0; pageNum <= 9; pageNum++) {
+
   // get all elements matching 'tr'
   const playersAsRows = await page.$$('tr');
   // remove first 'tr' element (header row)
   playersAsRows.shift();
-
-  const playersAsObjects = [];
 
   // for each 'tr' element, get inner text and convert into object, then push into playersAsObjects array (excluding unwanted player info such as positional rank, rookie status and trending direction)
   for (let index = 0; index < playersAsRows.length; index++) {
@@ -69,8 +72,17 @@ async function scrapeFantasyCalcRankings() {
         value: splitPlayer[splitPlayer.length - 1],
       }
     );
-
   }
+  
+  // don't seem to need this?
+  // await page.waitForSelector('.download-icon');
+
+  // click to view next page
+  await page.click('.mat-paginator-navigation-next');
+
+  // don't seem to need this either?
+  // new Promise(r => setTimeout(r, 5000)); // Adjust the timeout as necessary
+}
 
   // close browser instance
   browser.close();
