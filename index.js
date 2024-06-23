@@ -1,4 +1,5 @@
-const KTCScrape = require('./scripts/KTCScrape');
+import  scrapeKTCRankings  from './scripts/KTCScrape.js';
+import  scrapeFantasyCalcRankings  from './scripts/FCScrape.js'
 
-KTCScrape.scrapeFantasyCalcRankings();
-KTCScrape.scrapeKTCRankings();
+// scrapeKTCRankings();
+scrapeFantasyCalcRankings();
