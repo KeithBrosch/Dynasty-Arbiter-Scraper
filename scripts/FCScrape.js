@@ -54,7 +54,7 @@ async function scrapeFantasyCalcRankings() {
 
   // clear and insert to supabase
   const { data, error } = await supabase
-    .from('fc_values')
+    .from(`${process.env.SUPABASE_FC_DB_NAME}`)
     .delete()
     .neq('player_value', 0)
 
@@ -62,7 +62,7 @@ async function scrapeFantasyCalcRankings() {
       console.error(error);
     }
   const { data2, error2 } = await supabase
-    .from('fc_values')
+    .from(`${process.env.SUPABASE_FC_DB_NAME}`)
     .insert(playersAsObjects)
     
     if (error2) {

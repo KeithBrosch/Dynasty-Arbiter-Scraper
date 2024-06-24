@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer';
+import 'dotenv/config'
 import supabase from '../supabase/supabaseClient.js';
 
 async function scrapeKTCRankings() {
@@ -50,7 +51,7 @@ async function scrapeKTCRankings() {
 
   // clear and insert to supabase
   const { data, error } = await supabase
-    .from('ktc_values')
+    .from(`${process.env.SUPABASE_KTC_DB_NAME}`)
     .delete()
     .neq('player_value', 0)
 
@@ -59,7 +60,7 @@ async function scrapeKTCRankings() {
     }
 
   const { data2, error2 } = await supabase
-    .from('ktc_values')
+    .from(`${process.env.SUPABASE_KTC_DB_NAME}`)
     .insert(playersAsObjects)
     
     if (error2) {
