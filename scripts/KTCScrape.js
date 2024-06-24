@@ -31,8 +31,6 @@ async function scrapeKTCRankings() {
 
       // get player id on KTC
       var player_slug = await page.evaluate(element => Object.values(Object.values(element.nextSibling.childNodes)[0])[0].slug, element);
-      player_slug = player_slug.split('-');
-      const player_id = player_slug[player_slug.length - 1]
 
       playersAsObjects.push(
         {
@@ -41,7 +39,7 @@ async function scrapeKTCRankings() {
           // team: splitPlayer[1].substring(splitPlayer[1].length - 3, splitPlayer[1].length),
           player_age: splitPlayer[2].split('•')[1] || 'PICK',
           player_value: splitPlayer[3],
-          ktc_id: player_id
+          ktc_player_slug: player_slug
         }
       );
     }
@@ -49,14 +47,23 @@ async function scrapeKTCRankings() {
 
   // close browser instance
   browser.close();
-  
-  // insert to supabase
+
+  // clear and insert to supabase
   const { data, error } = await supabase
+    .from('ktc_values')
+    .delete()
+    .neq('player_value', 0)
+
+    if (error) {
+      console.error(error);
+    }
+
+  const { data2, error2 } = await supabase
     .from('ktc_values')
     .insert(playersAsObjects)
     
-    if (error) {
-      console.error(error);
+    if (error2) {
+      console.error(error2);
     }
     
   // console.log('KTC Top 500: ', playersAsObjects);

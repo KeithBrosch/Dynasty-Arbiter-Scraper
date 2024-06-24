@@ -23,12 +23,18 @@ async function scrapeFantasyCalcRankings() {
   for (let index = 0; index < playersAsRows.length; index++) {
     const playerText = await (await (await playersAsRows[index].getProperty('innerText')).jsonValue()).replace(/(\t\n|\n\n|\n\n\t|\t)/gm," splitHere ");
     const splitPlayer = playerText.split(' splitHere ');
+
+    // get player id on FC
+    const element = playersAsRows[index];
+    var player_slug = await  page.evaluate(element => element.childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].getAttribute('href'), element);
+
     playersAsObjects.push(
       {
         // rank: splitPlayer[0],
         player_name: splitPlayer[1],
         player_age: splitPlayer[splitPlayer.length - 2],
         player_value: splitPlayer[splitPlayer.length - 1],
+        fc_player_slug: player_slug
       }
     );
   }
@@ -46,12 +52,21 @@ async function scrapeFantasyCalcRankings() {
   // close browser instance
   browser.close();
 
+  // clear and insert to supabase
   const { data, error } = await supabase
+    .from('fc_values')
+    .delete()
+    .neq('player_value', 0)
+
+    if (error) {
+      console.error(error);
+    }
+  const { data2, error2 } = await supabase
     .from('fc_values')
     .insert(playersAsObjects)
     
-    if (error) {
-      console.error(error);
+    if (error2) {
+      console.error(error2);
     }
   // console.log('FantasyCalc Top 50: ', playersAsObjects);
 }
