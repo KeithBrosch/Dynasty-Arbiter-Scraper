@@ -12,7 +12,7 @@ async function scrapeFantasyCalcRankings() {
 
   const playersAsObjects = [];
 
-  for (let pageNum = 0; pageNum <= 9; pageNum++) {
+  for (let pageNum = 0; pageNum <= 8; pageNum++) {
 
   // get all elements matching 'tr'
   const playersAsRows = await page.$$('tr');
@@ -52,18 +52,18 @@ async function scrapeFantasyCalcRankings() {
   // close browser instance
   browser.close();
 
-  // clear and insert to supabase
-  const { data, error } = await supabase
-    .from(`${process.env.SUPABASE_FC_DB_NAME}`)
-    .delete()
-    .neq('player_value', 0)
+    // clear and insert to supabase
+    const { data, error } = await supabase
+      .from(`${process.env.SUPABASE_FC_DB_NAME}`)
+      .delete()
+      .neq('fc_player_value', 0)
 
-    if (error) {
-      console.error(error);
-    }
+      if (error) {
+        console.error(error);
+      }
   const { data2, error2 } = await supabase
     .from(`${process.env.SUPABASE_FC_DB_NAME}`)
-    .insert(playersAsObjects)
+    .upsert(playersAsObjects)
     
     if (error2) {
       console.error(error2);

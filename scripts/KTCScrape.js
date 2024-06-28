@@ -53,7 +53,7 @@ async function scrapeKTCRankings() {
   const { data, error } = await supabase
     .from(`${process.env.SUPABASE_KTC_DB_NAME}`)
     .delete()
-    .neq('player_value', 0)
+    .neq('ktc_player_value', 0)
 
     if (error) {
       console.error(error);
@@ -61,7 +61,7 @@ async function scrapeKTCRankings() {
 
   const { data2, error2 } = await supabase
     .from(`${process.env.SUPABASE_KTC_DB_NAME}`)
-    .insert(playersAsObjects)
+    .upsert(playersAsObjects)
     
     if (error2) {
       console.error(error2);
