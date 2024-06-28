@@ -31,9 +31,9 @@ async function scrapeFantasyCalcRankings() {
     playersAsObjects.push(
       {
         // rank: splitPlayer[0],
-        player_name: splitPlayer[1],
-        player_age: splitPlayer[splitPlayer.length - 2],
-        player_value: splitPlayer[splitPlayer.length - 1],
+        fc_player_name: splitPlayer[1],
+        fc_player_age: splitPlayer[splitPlayer.length - 2],
+        fc_player_value: splitPlayer[splitPlayer.length - 1],
         fc_player_slug: player_slug
       }
     );

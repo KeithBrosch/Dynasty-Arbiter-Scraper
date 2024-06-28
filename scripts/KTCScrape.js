@@ -36,10 +36,10 @@ async function scrapeKTCRankings() {
       playersAsObjects.push(
         {
           // rank: splitPlayer[0],
-          player_name: splitPlayer[1][splitPlayer[1].length - 4] === 'R' ? splitPlayer[1].substring(0, splitPlayer[1].length - 4) : splitPlayer[1].substring(0, splitPlayer[1].length - 3),
+          ktc_player_name: splitPlayer[1][splitPlayer[1].length - 4] === 'R' ? splitPlayer[1].substring(0, splitPlayer[1].length - 4) : splitPlayer[1].substring(0, splitPlayer[1].length - 3),
           // team: splitPlayer[1].substring(splitPlayer[1].length - 3, splitPlayer[1].length),
-          player_age: splitPlayer[2].split('•')[1] || 'PICK',
-          player_value: splitPlayer[3],
+          ktc_player_age: splitPlayer[2].split('•')[1] || 'PICK',
+          ktc_player_value: splitPlayer[3],
           ktc_player_slug: player_slug
         }
       );
